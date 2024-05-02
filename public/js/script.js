@@ -27,6 +27,22 @@ if(aplayer) {
     ap.on("pause", function () {
         elementAvatar.style.animationPlayState = "paused";
     })
+
+    ap.on("ended", function () {
+        const link = `/songs/listen/${dataSong._id}`;
+
+        const options = {
+            method: "PATCH"
+        }
+        fetch(link, options)
+            .then(res => res.json())
+            .then(data => {
+                if(data && data.code == 200){
+                    const span = document.querySelector(".inner-listen span");
+                    span.innerHTML = `${data.listen} lượt nghe`               
+                }
+            })
+    })
 }
 
 // End Aplayer
